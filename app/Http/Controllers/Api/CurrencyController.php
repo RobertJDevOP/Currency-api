@@ -7,17 +7,16 @@ Use App\Services\Client;
 Use Illuminate\Http\JsonResponse;
 Use Illuminate\Http\Request;
 
-
 class CurrencyController extends Controller
 {
 
-    public function convertCurrency(string $from,string $to,float $amount,Client $currencylayer): JsonResponse
+    public function convertCurrency(string $from, string $to, string $amount, Client $currencylayer): JsonResponse
     {
-        $result = $currencylayer->source($from)
-            ->currencies($to)
-            ->live();
+            $result = $currencylayer->source($from)
+                ->currencies($to)
+                ->live();
 
-        $result= $currencylayer::dataObject($result,$from,$to,$amount);
+            $result= $currencylayer::dataObject($result,$from,$to,$amount);
 
         return response()->json($result);
     }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 Use App\Contracts\ConvertCurrency;
 Use App\Helpers\ArrayHelper;
+use App\Exceptions\CustomException;
 
 class Client extends ArrayHelper implements ConvertCurrency
 {
@@ -135,7 +136,7 @@ class Client extends ArrayHelper implements ConvertCurrency
      * @param array $params
      *
      * @return array
-     *@throws \InvalidArgumentException
+     *@throws CustomException
      *
      */
     protected function request(string $endpoint, array $params): array
@@ -152,11 +153,12 @@ class Client extends ArrayHelper implements ConvertCurrency
         if (array_key_exists('error', $rsp)) {
             $error = $rsp['error'];
 
-            throw new \InvalidArgumentException($error['info'], $error['code']);
+            throw new CustomException($error['info'],$error['code']);
         }
 
         return $rsp;
     }
+
 
     public static function convert(float $rate, float $amount): float
     {
