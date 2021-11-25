@@ -8,26 +8,35 @@
 * [Mock Responses](#mock-responses)
 
 
+## Response Properties
 
 
-## Error handling
+| Property    | Description        | Type     
+| ----------- | --------------- | --------- | 
+| success     | ...          | String      | 
+| timestamp   |--| Timestamp | 
+| source      | ---           | String   | 
+| total      | 2992           | Float | 
+| message      | ''           | String | 
+## Error handling 
 
-Error responses should include a common HTTP status code, message for the developer, message for the end-user (when appropriate), internal error code (corresponding to some specific internally determined ID), links where developers can find more info. For example:
+This is a example of request failed
 
     {
-      "status" : 400,
-      "developerMessage" : "Verbose, plain language description of the problem. Provide developers
-       suggestions about how to solve their problems here",
-      "userMessage" : "This is a message that can be passed along to end-users, if needed.",
-      "errorCode" : "444444",
-      "moreInfo" : "http://www.example.gov/developer/path/to/help/for/444444,
+      "code" : 404,
+      "message" : "Verbose, plain language description of the problem. Provide developers
        http://drupal.org/node/444444",
     }
 
-Use three simple, common response codes indicating (1) success, (2) failure due to client-side problem, (3) failure due to server-side problem:
-* 200 - OK
-* 400 - Bad Request
-* 500 - Internal Server Error
+## API Codes
+
+| Code  | Info        | 
+| ----- | -------------------------------------------------| 
+| 200   | Success  Request                                  | 
+| 201   |You have supplied an invalid Source Currency       | 
+| 202   |You have provided one or more invalid Currency Codes| 
+| 404   |The request is invalid| 
+| 500   | Internal Server Error                              | 
 
 
 ## Request & Response Examples
