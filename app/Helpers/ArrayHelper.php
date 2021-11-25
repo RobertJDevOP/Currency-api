@@ -7,39 +7,29 @@ Use \stdClass;
 
 class ArrayHelper
 {
-    public static function RequestResponse(array $currency,$from,$to,$amount): array
-    {
-        $value = $currency['quotes'][$from.$to];
-
-        return ["source" => $currency["source"],
-              'success' => true,
-              'code' => 200,
-              'created_at' => now(),
-              $to=>$value,
-              'total'=> Client::convert($value,$amount)];
-    }
-
-    public static function currencysParser(array|string $to): string
-    {
-        $to = explode('-', $to);
-        return implode(',', $to);
-    }
-
-    public static function multipleRequestResponse(array $currencys, $amount): object
+    public static function metodoBergas(array $resultApi,$amount): object
     {
         $objCurrencies = new stdClass();
-        $objCurrencies->source = $currencys['source'];
-        $objCurrencies->success =true;
+        $objCurrencies->source = $resultApi['source'];
+        $objCurrencies->success =$resultApi['success'];
         $objCurrencies->code =200;
-        $objCurrencies->created_at =now();
+        $objCurrencies->created_at =$resultApi['timestamp'];
 
-        foreach ($currencys['quotes'] as $key => $row) {
-            $objCurrencies->currencies[] = [
-                 substr($key, 3) => $row,
-                'total' => Client::convert($row, $amount)
+        foreach ($resultApi['quotes'] as $key => $row) {
+
+            $objCurrencies->result[] = [
+                substr($key, 3) => $row,
+                'convert' => Client::convert($row, $amount)
             ];
 
         }
         return $objCurrencies;
     }
+
+    public static function currenciesParser(array|string $to): string
+    {
+        $to = explode('-', $to);
+        return implode(',', $to);
+    }
+
 }

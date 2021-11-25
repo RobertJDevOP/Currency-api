@@ -5,7 +5,6 @@
 * [Install](#install)
 * [Request & Response Examples](#request--response-examples)
 * [Error handling](#Error handling)
-* [Mock Responses](#mock-responses)
 
 
 ## Response Properties

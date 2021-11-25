@@ -12,46 +12,43 @@ class CurrencyController extends Controller
 
     public function convertCurrency(string $from, string $to, string $amount, Client $currencylayer): JsonResponse
     {
-        // refactor save data currencys on object cache.......
-
-            $result = $currencylayer->source($from)
+        $resultApi = $currencylayer->source($from)
                 ->currencies($to)
                 ->live();
 
-            $result= $currencylayer::RequestResponse($result,$from,$to,$amount);
+        $resultApi= $currencylayer->getRequestResponse($resultApi,$amount);
 
-        return response()->json($result);
+        return response()->json($resultApi);
     }
 
-    public function convertCurrencyDate(string $from,string $to,float $amount,string $date,Client $currencylayer) : JsonResponse
+    public function convertCurrencyDate(string $from,string $to,float $amount,string $date,Client $currencylayer): JsonResponse
     {
-        $result = $currencylayer->date($date)
+        $resultApi = $currencylayer->date($date)
             ->source($from)
             ->currencies($to)
             ->historical();
 
-        $result= $currencylayer::RequestResponse($result,$from,$to,$amount);
+        $resultApi=  $currencylayer->getRequestResponse($resultApi,$amount);
 
-        return response()->json($result);
+        return response()->json($resultApi);
     }
 
-    public function convertCurrencysDate(Request $request,Client $currencylayer)//: JsonResponse
+    public function convertCurrenciesDate(Request $request,Client $currencylayer): JsonResponse
     {
         $date = $request->query('date');
         $from = $request->query('from');
         $amount = $request->query('amount');
-        $to = Client::currencysParser($request->query('to'));
 
-        $result = $currencylayer->date($date)
+        $to = $currencylayer->getCurrenciesParser($request->query('to'));
+
+        $resultApi = $currencylayer->date($date)
             ->source($from)
             ->currencies($to)
             ->historical();
 
-        $result= $currencylayer::multipleRequestResponse($result,$amount);
+        $resultApi= $currencylayer->getRequestResponse($resultApi,$amount);
 
-        return response()->json([
-            "source" => $result
-        ]);
+        return response()->json($resultApi);
     }
 
 }

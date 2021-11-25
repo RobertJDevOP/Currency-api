@@ -6,7 +6,7 @@ Use App\Contracts\ConvertCurrency;
 Use App\Helpers\ArrayHelper;
 use App\Exceptions\CustomException;
 
-class Client extends ArrayHelper implements ConvertCurrency
+class Client  implements ConvertCurrency
 {
     const ENDPOINT = 'http://apilayer.net/api';
 
@@ -155,10 +155,20 @@ class Client extends ArrayHelper implements ConvertCurrency
 
             throw new CustomException($error['info'],$error['code']);
         }
-
+       // $this->newCache('USD', 12020);
         return $rsp;
     }
 
+
+    public  function  getRequestResponse (array $Currencies,$amount): object
+    {
+        return ArrayHelper::requestResponse($Currencies,$amount);
+    }
+
+    public  function  getCurrenciesParser (array|string $to): string
+    {
+        return ArrayHelper::currenciesParser($to);
+    }
 
     public static function convert(float $rate, float $amount): float
     {
