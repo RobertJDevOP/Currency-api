@@ -162,6 +162,6 @@ class Client extends ArrayHelper implements ConvertCurrency
 
     public static function convert(float $rate, float $amount): float
     {
-        return $amount * $rate;
+        return floatval($amount * $rate);
     }
 }

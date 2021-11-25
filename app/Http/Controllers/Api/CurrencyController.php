@@ -12,11 +12,13 @@ class CurrencyController extends Controller
 
     public function convertCurrency(string $from, string $to, string $amount, Client $currencylayer): JsonResponse
     {
+        // refactor save data currencys on object cache.......
+
             $result = $currencylayer->source($from)
                 ->currencies($to)
                 ->live();
 
-            $result= $currencylayer::dataObject($result,$from,$to,$amount);
+            $result= $currencylayer::RequestResponse($result,$from,$to,$amount);
 
         return response()->json($result);
     }
@@ -28,25 +30,24 @@ class CurrencyController extends Controller
             ->currencies($to)
             ->historical();
 
-        $result= $currencylayer::dataObject($result,$from,$to,$amount);
+        $result= $currencylayer::RequestResponse($result,$from,$to,$amount);
 
         return response()->json($result);
     }
 
-    public function convertCurrencysDate(Request $request,Client $currencylayer): JsonResponse
+    public function convertCurrencysDate(Request $request,Client $currencylayer)//: JsonResponse
     {
-
         $date = $request->query('date');
         $from = $request->query('from');
         $amount = $request->query('amount');
-        $to = Client::dataParser($request->query('to'));
+        $to = Client::currencysParser($request->query('to'));
 
         $result = $currencylayer->date($date)
             ->source($from)
             ->currencies($to)
             ->historical();
 
-        $result= $currencylayer::dataObjects($result,$amount);
+        $result= $currencylayer::multipleRequestResponse($result,$amount);
 
         return response()->json([
             "source" => $result

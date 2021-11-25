@@ -18,9 +18,10 @@
 | source      | ---           | String   | 
 | total      | 2992           | Float | 
 | message      | ''           | String | 
+
 ## Error handling 
 
-This is a example of request failed
+Examples of requests failed
 
     {
       "code" : 404,
@@ -75,11 +76,26 @@ Response body:
 
 ### GET /multipleConvert/
 
-Example: multipleConvert – GET  http://example.gov/api/v1/magazines/[id]/articles
-http://127.0.0.1:8000/api/v1/convertCurrencys?from=USD&to=COP-EUR&amount=1000&date=2021-11-21
+Example Full URL :  http://127.0.0.1:8000/api/v1/multipleConvert?from=USD&to=COP-EUR&amount=1000&date=2021-11-21
 
 Request body:
 
-    
+        {
+            "source": {
+            "source": "USD",
+            "success": true,
+            "code": 200,
+            "currencies": [
+                    {
+                    "COP": 3914,
+                    "total": 3914000
+                    },
+                    {
+                    "EUR": 0.886902,
+                    "total": 886.9019999999999
+                    }
+                ]
+            }
+        }
 
 

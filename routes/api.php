@@ -7,6 +7,8 @@ Route::name('api.')->group(function () {
    Route::get('v1/convert/{from}/{to}/{amount}', [CurrencyController::class, 'convertCurrency' ])
       ->whereNumber('amount')->whereAlpha('from')->whereAlpha('to');
 
-    Route::get('v1/convert/{from}/{to}/{amount}/{date}', [CurrencyController::class, 'convertCurrencyDate' ]);
-    Route::get('v1/multipleConvert/', [CurrencyController::class, 'convertCurrencysDate' ]);//Full url
+    Route::get('v1/convert/{from}/{to}/{amount}/{date}', [CurrencyController::class, 'convertCurrencyDate' ])
+        ->whereNumber('amount')->whereAlpha('from')->whereAlpha('to');
+
+    Route::get('v1/multipleConvert/', [CurrencyController::class, 'convertCurrencysDate' ]);
 });
