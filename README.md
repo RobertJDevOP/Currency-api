@@ -24,7 +24,7 @@ This is a example of request failed
 
     {
       "code" : 404,
-      "message" : "Verbose, plain language description of the problem. Provide developers
+      "message" : ""
     }
 
 ## API Codes
