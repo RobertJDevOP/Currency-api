@@ -12,7 +12,8 @@ class CacheHelper
 
     public function __construct($cache = TRUE, $folder = 'dcf', $cacheTimeout = 7200)
     {
-        $this->cacheFolder = ($folder == 'dcf') ? dirname(__FILE__).'/convert/' : $folder;
+
+        $this->cacheFolder = ($folder == 'dcf') ?  dirname(__FILE__).'/JsonCurrencys/': $folder;
 
         if (is_writable($this->cacheFolder) && $cache == TRUE) {
             $this->cachable     = TRUE;
@@ -20,41 +21,33 @@ class CacheHelper
         }
     }
 
-    protected function newCache($file, $rate)
+    public function newCache($file, $rate,$endpoint)
     {
-
         if ($this->cachable) {
-            $file = strtoupper($file).'.convertcache';
-
-            $data = time().PHP_EOL.$rate;
-            file_put_contents($this->cacheFolder.$file, $data);
+            $file = strtoupper($file).$endpoint.'.json';
+            file_put_contents($this->cacheFolder.$file, json_encode($rate));
         }
-
     }
 
+    public function getCache($file,$endpoint) {
+
+        if ($this->cachable && file_exists($this->cacheFolder.strtoupper($file).$endpoint.'.json')) {
+            $file = file($this->cacheFolder.strtoupper($file).$endpoint.'.json');
+
+            $array= json_decode($file[0]);
 
 
-    protected function getCache($file) {
-
-        if ($this->cachable && file_exists($this->cacheFolder.strtoupper($file).'.convertcache')) {
-            $file = file($this->cacheFolder.$file.'.convertcache');
-
-            if ($file[0] < (time() - $this->cacheTimeout)) {
-                return FALSE;
+            if ($array->cacheTime < (time() - $this->cacheTimeout)) {
+                return false;
             }
-
-            return $file[1];
+            return $array;
         }
-
-        return FALSE;
-
+        return false;
     }
-
-
 
     public function clearCache()
     {
-        $files = glob($this->cacheFolder.'*.convertcache');
+        $files = glob($this->cacheFolder.'*.json');
 
         if (!empty($files)) {
             array_map('unlink', $files);

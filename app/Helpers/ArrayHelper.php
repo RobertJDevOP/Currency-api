@@ -7,15 +7,15 @@ Use \stdClass;
 
 class ArrayHelper
 {
-    public static function metodoBergas(array $resultApi,$amount): object
+     public static function builderResponse(object $resultApi, $amount): object
     {
         $objCurrencies = new stdClass();
-        $objCurrencies->source = $resultApi['source'];
-        $objCurrencies->success =$resultApi['success'];
+        $objCurrencies->source = $resultApi->source;
+        $objCurrencies->success =$resultApi->success;
         $objCurrencies->code =200;
-        $objCurrencies->created_at =$resultApi['timestamp'];
+        $objCurrencies->created_at =$resultApi->timestamp;
 
-        foreach ($resultApi['quotes'] as $key => $row) {
+        foreach ($resultApi->quotes as $key => $row) {
 
             $objCurrencies->result[] = [
                 substr($key, 3) => $row,
