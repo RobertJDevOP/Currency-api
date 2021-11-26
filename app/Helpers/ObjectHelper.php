@@ -2,10 +2,10 @@
 
 namespace App\Helpers;
 
-use App\Services\Client;
+use App\Services\CurrencyLayer;
 Use \stdClass;
 
-class ArrayHelper
+class ObjectHelper
 {
      public static function builderResponse(object $resultApi, $amount): object
     {
@@ -19,7 +19,7 @@ class ArrayHelper
 
             $objCurrencies->result[] = [
                 substr($key, 3) => $row,
-                'convert' => Client::convert($row, $amount)
+                'convert' => CurrencyLayer::convert($row, $amount)
             ];
 
         }

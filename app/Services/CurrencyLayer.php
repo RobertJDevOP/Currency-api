@@ -3,11 +3,11 @@
 namespace App\Services;
 
 Use App\Contracts\ConvertCurrency;
-Use App\Helpers\ArrayHelper;
+Use App\Helpers\ObjectHelper;
 use App\Exceptions\CustomException;
-use App\Helpers\CacheHelper;
+use App\Helpers\ResponseHelper;
 
-class Client  implements ConvertCurrency
+class CurrencyLayer  implements ConvertCurrency
 {
     const ENDPOINT = 'http://apilayer.net/api';
 
@@ -23,8 +23,6 @@ class Client  implements ConvertCurrency
     private $access_key;
 
     /**
-     * Constructor.
-     *
      * @param string $access_key
      */
     public function __construct(string $access_key = 'a3ff3f4a3b0c5dd2deffdc3eaa07325c')
@@ -34,58 +32,49 @@ class Client  implements ConvertCurrency
 
     /**
      * @param $source
-     *
      * @return $this
      */
-    public function source($source): Client
+    public function source($source): CurrencyLayer
     {
         $this->source = $source;
-
         return $this;
     }
 
     /**
      * @param $currencies
-     *
      * @return $this
      */
-    public function currencies($currencies): Client
+    public function currencies($currencies): CurrencyLayer
     {
         $this->currencies = $currencies;
-
         return $this;
     }
 
     /**
      * @param $from
-     *
      * @return $this
      */
-    public function from($from): Client
+    public function from($from): CurrencyLayer
     {
         $this->from = $from;
-
         return $this;
     }
 
     /**
      * @param $to
-     *
      * @return $this
      */
-    public function to($to): Client
+    public function to($to): CurrencyLayer
     {
         $this->to = $to;
-
         return $this;
     }
 
     /**
      * @param $amount
-     *
      * @return $this
      */
-    public function amount($amount): Client
+    public function amount($amount): CurrencyLayer
     {
         $this->amount = $amount;
 
@@ -94,13 +83,11 @@ class Client  implements ConvertCurrency
 
     /**
      * @param $date
-     *
      * @return $this
      */
-    public function date($date): Client
+    public function date($date): CurrencyLayer
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -136,57 +123,22 @@ class Client  implements ConvertCurrency
     /**
      * @param string $endpoint
      * @param array $params
-     *
-     * @return array
+     * @return object
      *@throws CustomException
-     *
      */
     protected function request(string $endpoint, array $params): object
     {
-         $from=$params['source'];
-         $to=$this->getCurrenciesParser($params['currencies']);
-         $to = preg_replace('/[\,\+]/', '', $to);
-
-        ('/live'===$endpoint)
-            ? $typeRequest='live'
-            : $typeRequest='historical';
-
-        $obj = new CacheHelper();
-        $rsp = $obj->getCache($from.$to,$typeRequest);
-
-          if($rsp  !== false) {
-              $objectResponse=$rsp;
-          }else {
-              $params['access_key'] = $this->access_key;
-              $url = self::ENDPOINT.$endpoint.'?'.http_build_query($params);
-              $ch = curl_init();
-              curl_setopt($ch, CURLOPT_URL, $url);
-              curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-              $json = curl_exec($ch);
-              curl_close($ch);
-              $objectResponse = json_decode($json);
-              $objectResponse->cacheTime = time();
-
-              if (property_exists( $objectResponse,'error')) {
-                  $error = $objectResponse['error'];
-
-                  throw new CustomException($error['info'],$error['code']);
-              }
-
-              $obj->newCache($from.$to, $objectResponse,$typeRequest);
-          }
-
-          return $objectResponse;
+        return ResponseHelper::builderResponse( $endpoint,$params,$this->access_key);
     }
 
     public  function  getResponse(object $Currencies,$amount): object
     {
-        return ArrayHelper::builderResponse($Currencies,$amount);
+        return ObjectHelper::builderResponse($Currencies,$amount);
     }
 
-    public  function getCurrenciesParser(array|string $to): string
+    static  function getCurrenciesParser(array|string $to): string
     {
-        return ArrayHelper::currenciesParser($to);
+        return ObjectHelper::currenciesParser($to);
     }
 
     public static function convert(float $rate, float $amount): float

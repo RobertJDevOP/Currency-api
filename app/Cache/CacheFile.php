@@ -2,13 +2,11 @@
 
 namespace App\Helpers;
 
-class CacheHelper
+class CacheFile
 {
-    private $cachable = FALSE;
-
-    private $cacheFolder;
-
-    private $cacheTimeout;
+    private bool $cacheable= false;
+    private string $cacheFolder;
+    private int $cacheTimeout;
 
     public function __construct($cache = TRUE, $folder = 'dcf', $cacheTimeout = 7200)
     {
@@ -16,26 +14,26 @@ class CacheHelper
         $this->cacheFolder = ($folder == 'dcf') ?  dirname(__FILE__).'/JsonCurrencys/': $folder;
 
         if (is_writable($this->cacheFolder) && $cache == TRUE) {
-            $this->cachable     = TRUE;
+            $this->cacheable     = TRUE;
             $this->cacheTimeout = $cacheTimeout;
         }
     }
 
-    public function newCache($file, $rate,$endpoint)
+    public function newCache($file, $rate,$endpoint): void
     {
-        if ($this->cachable) {
+        if ($this->cacheable) {
             $file = strtoupper($file).$endpoint.'.json';
             file_put_contents($this->cacheFolder.$file, json_encode($rate));
         }
     }
 
-    public function getCache($file,$endpoint) {
+    public function getCache($file,$endpoint): bool|object
+    {
 
-        if ($this->cachable && file_exists($this->cacheFolder.strtoupper($file).$endpoint.'.json')) {
+        if ($this->cacheable && file_exists($this->cacheFolder.strtoupper($file).$endpoint.'.json')) {
             $file = file($this->cacheFolder.strtoupper($file).$endpoint.'.json');
 
             $array= json_decode($file[0]);
-
 
             if ($array->cacheTime < (time() - $this->cacheTimeout)) {
                 return false;
@@ -45,13 +43,12 @@ class CacheHelper
         return false;
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $files = glob($this->cacheFolder.'*.json');
 
         if (!empty($files)) {
             array_map('unlink', $files);
         }
-
     }
 }

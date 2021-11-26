@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\CustomException;
 use App\Http\Controllers\Controller;
-Use App\Services\Client;
+Use App\Services\CurrencyLayer;
 Use Illuminate\Http\JsonResponse;
 Use Illuminate\Http\Request;
 
 class CurrencyController extends Controller
 {
-
-    public function convert(string $from, string $to, string $amount,$date = null, Client $currencylayer): JsonResponse
+    /**
+     * @throws CustomException
+     */
+    public function convert(string $from, string $to, string $amount, $date = null, CurrencyLayer $currencylayer): JsonResponse
     {
         (!empty($date))
             ?
@@ -32,7 +34,7 @@ class CurrencyController extends Controller
     /**
      * @throws CustomException
      */
-    public function multipleConvert(Request $request, Client $currencylayer): JsonResponse
+    public function multipleConvert(Request $request, CurrencyLayer $currencylayer): JsonResponse
     {
         $date = $request->query('date');
         $from = $request->query('from');
