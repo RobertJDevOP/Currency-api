@@ -4,6 +4,7 @@
 
 ## Content
 * [Install](#install)
+* [Usage](#Usage)
 * [Response Properties](#Response-Properties)
 * [Error handling](#Error-handling)
 * [Api codes](#Api-codes)
@@ -25,6 +26,12 @@ Run composer command
 php artisan serve
 ```
 Once the service is started we can consume the API
+
+# Usage
+
+$cache - Set this to FALSE if you do not want to enabled cachine (TRUE by default)
+$cacheFolder - Set your cache folder. By default
+$cacheTimeout - Set the amount of time the rates are cached for (in seconds), set to 1 day by default
 
 ## Response Properties
 
