@@ -3,9 +3,9 @@
 #  Convert of currencys API 
 
 * [Install](#install)
-* [Response Properties](#Response Properties)
-* [Error handling](#Error handling)
-* [Api codes](#Api codes)
+* [Response Properties](#Response-Properties)
+* [Error handling](#Error-handling)
+* [Api codes](#Api-codes)
 * [Request & Response Examples](#request-response-examples)
 
 ## Install
@@ -93,7 +93,6 @@ Example Full URL :  http://127.0.0.1:8000/api/v1/multipleConvert?from=USD&to=COP
 Request body:
 
         {
-            "source": 
             "source": "USD",
             "success": true,
             "code": 200,
