@@ -1,7 +1,8 @@
 
 
-#  Convert of currencys API 
+#  PHP Laravel convert of currencies
 
+##Content
 * [Install](#install)
 * [Response Properties](#Response-Properties)
 * [Error handling](#Error-handling)
@@ -10,7 +11,7 @@
 
 ## Install
 
-This is a simple implementation of the currencylayer api, which converts the amounts entered from the standard currency USD to any currency in which cache is used, avoiding multiple requests to the currencylayer api.
+This is a simple implementation of the currencylayer api, which converts the amounts entered from the standard currency USD to any currency,in which cache is used, avoiding multiple requests to the currencylayer api.
 
 To use it
 
