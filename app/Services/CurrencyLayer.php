@@ -133,12 +133,12 @@ class CurrencyLayer  implements ConvertCurrency
 
     public  function  getResponse(object $Currencies,$amount): object
     {
-        return ObjectHelper::builderResponse($Currencies,$amount);
+        return ObjectHelper::builderObject($Currencies,$amount);
     }
 
     static  function getCurrenciesParser(array|string $to): string
     {
-        return ObjectHelper::currenciesParser($to);
+        return ObjectHelper::parserCurrencies($to);
     }
 
     public static function convert(float $rate, float $amount): float

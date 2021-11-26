@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use App\Exceptions\CustomException;
 use App\Services\CurrencyLayer;
-use App\Cache\CacheFile;
+use App\CacheApi\CacheFile;
 
 class ResponseHelper extends CurrencyLayer
 {

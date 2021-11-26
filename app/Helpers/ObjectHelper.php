@@ -7,7 +7,7 @@ Use \stdClass;
 
 class ObjectHelper
 {
-     public static function builderResponse(object $resultApi, $amount): object
+     public static function builderObject(object $resultApi, $amount): object
     {
         $objCurrencies = new stdClass();
         $objCurrencies->source = $resultApi->source;
@@ -26,7 +26,7 @@ class ObjectHelper
         return $objCurrencies;
     }
 
-    public static function currenciesParser(array|string $to): string
+    public static function parserCurrencies(array|string $to): string
     {
         $to = explode('-', $to);
         return implode(',', $to);
