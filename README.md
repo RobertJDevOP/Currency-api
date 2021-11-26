@@ -2,7 +2,7 @@
 
 #  PHP Laravel convert of currencies
 
-##Content
+## Content
 * [Install](#install)
 * [Response Properties](#Response-Properties)
 * [Error handling](#Error-handling)
