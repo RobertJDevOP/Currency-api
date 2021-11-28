@@ -21,7 +21,11 @@ Clone the project
 ```bash
 git clone https://github.com/RobertJDevOP/Currency-api.git
 ```
-Run composer command
+Run composer commands
+```bash
+composer install
+```
+
 ```bash
 php artisan serve
 ```
@@ -76,8 +80,8 @@ The date field is optional.
 
 Example: http://127.0.0.1:8000/api/v1/convert/[from]/[to]/[amount]/[date]
 
-True example : http://127.0.0.1:8000/api/convert/USD/COP/1000  or
-http://127.0.0.1:8000/api/convert/USD/COP/1000/2021-11-21
+True example : http://127.0.0.1:8000/api/v1/convert/USD/COP/1000  or
+http://127.0.0.1:8000/api/v1/convert/USD/COP/1000/2021-11-21
 
 Response body example:
 
