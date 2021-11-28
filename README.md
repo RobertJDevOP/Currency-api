@@ -1,6 +1,6 @@
 
 
-#  PHP Laravel convert of currencies
+# a simple convert of currencies Laravel 
 
 ## Content
 * [Install](#install)
