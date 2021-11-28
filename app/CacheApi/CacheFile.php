@@ -11,7 +11,7 @@ class CacheFile
     public function __construct($cache = TRUE, $folder = 'dcf', $cacheTimeout = 7200)
     {
 
-        $this->cacheFolder = ($folder == 'dcf') ?  dirname(__FILE__).'/JsonCurrencys/': $folder;
+        $this->cacheFolder = ($folder == 'dcf') ?  dirname(__FILE__).'/JsonCurrencies/': $folder;
 
         if (is_writable($this->cacheFolder) && $cache == TRUE) {
             $this->cacheable     = TRUE;
