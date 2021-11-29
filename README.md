@@ -49,7 +49,8 @@ $cacheTimeout - Set the amount of time the rates are cached for (in seconds), se
 | result      |   Array containing the converted currencies     | Array |
 
 ## Error handling
-Examples of requests failed
+This error is shown when the url is badly formed or simply does not have the required mandatory parameters
+Examples of requests failed ,
 
     {
       "code" : 404,
@@ -70,6 +71,8 @@ Examples of requests failed
 ## Request & Response Examples
 
 ### API Resources
+
+The api resources requires the from to and amount fields to be required and date is optional
 
   - [GET /convert/[from]/[to]/[amount]/[date]](#get-convert)
   - [GET /multipleConvert/from=USD&to=COP-EUR-GBP&amount=1000&date=2021-11-21](#get-multipleConvert)
