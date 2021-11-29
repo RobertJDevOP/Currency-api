@@ -14,6 +14,10 @@
 
 This is a simple implementation of the currencylayer api, which converts the amounts entered from the standard currency USD to any currency,in which cache is used, avoiding multiple requests to the currencylayer api.
 
+for now it only allows us to make conversions from USD to any other currency but not vice versa
+
+from -> USD
+
 To use it
 
 Clone the project 
